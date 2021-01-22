@@ -9,10 +9,11 @@ __author__ = """Kyle Thomas, with the aid of:
              https://requests.readthedocs.io/en/master/user/quickstart/
              https://docs.python.org/3/library/re.html
              https://regex101.com/
+             http://emailregex.com/
              http://phoneregex.com/
              http://urlregex.com/
              https://www.w3schools.com/python/python_howto_remove_duplicates.asp
-             feedback from Kano Marvel
+             feedback from Kano Marvel and JT Maupin
              """
 
 import argparse
@@ -32,7 +33,8 @@ def retrieve_text(url):
 
 def find_email(text):
     """Creates a list of email addresses included on a webpage"""
-    email_regex = r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'
+    email_regex = r'(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)'
+    # email_regex = r'^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$'
     email_addresses = (re.findall(email_regex, text))
     # filter out duplicates
     email_addresses = list(dict.fromkeys(email_addresses))
@@ -56,10 +58,13 @@ def find_urls(text):
     urls = re.findall(''.join(url_regex), text)
     # filter out duplicates
     urls = list(dict.fromkeys(urls))
+    # strip HTML tags from URL, if any
+    urls = [re.sub(r'>?<[^>]*>', ' ', item) for item in urls]
     return urls
 
 
 def format_result(urls, phone_nums, emails):
+    print('*' * 112)
     print('URLS:\n')
     for item in urls:
         print(item)
@@ -76,6 +81,7 @@ def format_result(urls, phone_nums, emails):
             print(f'({item[0]}) {item[1]}-{item[2]}')
     else:
         print('None')
+    print('_' * 112)
 
 
 def create_parser():
