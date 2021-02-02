@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "simple-web-scraper-somethingclever76"
+version = "0.1.0"
+description = "A simple web scraper that looks for URLs, emails, and phone numbers"
+authors = ["Kyle <mrkylethomas76@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "^2.25.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
